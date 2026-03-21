@@ -1,0 +1,23 @@
+.bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top_cap {
+  height: 0.25em;
+  width: 0.25em;
+  border-radius: 100vh 100vh 0 0;
+}
+
+.body {
+  height: 0.25em;
+  width: 0.25em;
+}
+
+.bottom_cap {
+  height: 0.25em;
+  width: 0.25em;
+  border-radius: 0 0 100vh 100vh;
+}

@@ -1,0 +1,163 @@
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  --space: 2rem;
+  padding: var(--space);
+}
+
+/* Corner styles */
+
+.widget,
+.top_left {
+  /* Default: top-left */
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.top_right {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.bottom_left {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.bottom_right {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+/* Widget styles */
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: fit-content;
+  height: fit-content;
+  transition:
+    transform 1.25s ease-in-out,
+    opacity 1s linear;
+  transform: scale(0.7);
+  opacity: 0;
+}
+
+.widget.visible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.content {
+  display: flex;
+  gap: 0.5em;
+  height: 7em;
+}
+
+.bar_container {
+  height: 0.5em;
+  border-radius: 100vh;
+  overflow: hidden;
+  width: 25.5em;
+  position: relative;
+}
+
+.bar {
+  position: absolute;
+  inset: 0;
+  border-radius: 100vh;
+  transition: width 300ms;
+}
+
+.cover_container {
+  position: relative;
+  aspect-ratio: 1;
+  height: 100%;
+}
+
+.cover_glow {
+  position: absolute;
+  inset: 0;
+  filter: blur(0.75em) brightness(150%);
+  opacity: 1;
+}
+
+.cover {
+  position: relative;
+  z-index: 50;
+  border-radius: 0.5em;
+}
+
+.text {
+  z-index: 50;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 18em;
+}
+
+.info,
+.duration {
+  position: relative;
+  z-index: 50;
+  transform: translateZ(0);
+  overflow: clip;
+  border-radius: 0.5em;
+  transition: all 300ms;
+  display: flex;
+}
+
+.info {
+  height: 100%;
+  padding: 0.25em 0.75em;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.duration {
+  height: 4.5em;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.artist {
+  position: relative;
+  z-index: 50;
+  overflow: clip;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875em;
+}
+
+.duration > p {
+  font-size: 0.875em;
+  font-weight: bold;
+  width: 3em;
+}
+
+.vis_container {
+  display: flex;
+  align-items: center;
+  transition: all;
+  transition-duration: 500ms;
+}
+
+.vis {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0 0.5em;
+}
