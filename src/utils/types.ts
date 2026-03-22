@@ -69,3 +69,10 @@ export interface Score {
   missCount: number;
   currentHealth: number;
 }
+
+export interface MapState {
+  info: MapInfo | null;
+  score: Score | null;
+  isPlaying: boolean;
+  visible: boolean;
+}

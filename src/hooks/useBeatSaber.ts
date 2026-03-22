@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import type { Handshake, Packet, MapInfo, Score } from "../utils/types";
+import type { Handshake, Packet, MapState } from "../utils/types";
+import { useTimer } from "./useTimer";
 
 // Connects to the BeatSaberPlus WebSocket for Map Info and Scores
 // By default available at "ws://127.0.0.1:2947/socket"
@@ -13,13 +14,6 @@ const connectionStatus = {
   [ReadyState.CLOSED]: "Disconnected",
   [ReadyState.UNINSTANTIATED]: "Uninstantiated",
 };
-
-interface MapState {
-  info: MapInfo | null;
-  score: Score | null;
-  isPlaying: boolean;
-  visible: boolean;
-}
 
 const testingData: MapState = {
   info: {
@@ -60,6 +54,8 @@ export default function useBeatSaber(debug = false, ip = "127.0.0.1:2947") {
       ? testingData
       : { info: null, score: null, isPlaying: false, visible: false }
   );
+  const { handlePacket, progressPct, formattedCurrent, formattedDuration } =
+    useTimer(mapState);
 
   // Connect to BeatSaberPlus to receive messages
   // If it fails, try again after 5 seconds
@@ -93,10 +89,12 @@ export default function useBeatSaber(debug = false, ip = "127.0.0.1:2947") {
       // Set isPlaying when pausing or resuming
       if (ev === "pause") {
         setMapState((prev) => ({ ...prev, isPlaying: false }));
+        handlePacket(packet);
         return;
       }
       if (ev === "resume") {
         setMapState((prev) => ({ ...prev, isPlaying: true }));
+        handlePacket(packet);
         return;
       }
 
@@ -115,6 +113,7 @@ export default function useBeatSaber(debug = false, ip = "127.0.0.1:2947") {
           ...prev,
           info: packet.mapInfoChanged,
         }));
+        handlePacket(packet);
         return;
       }
 
@@ -128,7 +127,15 @@ export default function useBeatSaber(debug = false, ip = "127.0.0.1:2947") {
       }
     }
     checkPacket();
-  }, [lastJsonMessage]);
+  }, [lastJsonMessage, handlePacket]);
 
-  return { connectionState, readyState, handshake, state: mapState };
+  return {
+    connectionState,
+    readyState,
+    handshake,
+    state: mapState,
+    progressPct,
+    formattedCurrent,
+    formattedDuration,
+  };
 }

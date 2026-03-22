@@ -30,27 +30,15 @@ export default function Overlay() {
     : "";
 
   // Get info from the BeatSaberPlus connection
-  const { state } = useBeatSaber(debug, ip ?? undefined);
-  const { info, score, isPlaying, visible } = state;
+  const { state, progressPct, formattedCurrent, formattedDuration } =
+    useBeatSaber(debug, ip ?? undefined);
+  const { info, isPlaying, visible } = state;
 
   // Build the cover image and get prominent colors
   const cover = state.info?.coverRaw
     ? `data:image/png;base64,${state.info.coverRaw}`
     : "/CustomLevelsPack.jpg";
   const { colors } = useVibrant(cover);
-
-  // Convert info.duration from milliseconds to mm:ss format
-  const duration = info?.duration
-    ? new Date(info.duration).toISOString().substr(14, 5)
-    : "00:00";
-
-  const currentTime = score?.time
-    ? new Date(score.time * 1000).toISOString().substr(14, 5)
-    : "00:00";
-
-  // Calculate the progress of the timer bar in %
-  const totalDuration = (info?.duration || 0) / 100000;
-  const barWidth = ((score?.time || 0) / totalDuration).toFixed(2) + "%";
 
   return (
     <div className={`${styles.overlay} ${positionStyle}`}>
@@ -77,7 +65,7 @@ export default function Overlay() {
               className={styles.duration}
               style={{ background: colors?.darkMuted }}
             >
-              <p>{currentTime}</p>
+              <p>{formattedCurrent}</p>
               <div className={styles.vis_container}>
                 <div className={styles.vis}>
                   <Visualizer
@@ -86,7 +74,7 @@ export default function Overlay() {
                   />
                 </div>
               </div>
-              <p>{duration}</p>
+              <p>{formattedDuration}</p>
             </div>
           </div>
         </div>
@@ -98,7 +86,7 @@ export default function Overlay() {
             className={styles.bar}
             style={{
               background: colors?.vibrant,
-              width: barWidth,
+              width: progressPct + "%",
             }}
           ></div>
         </div>
