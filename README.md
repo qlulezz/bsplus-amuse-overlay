@@ -1,73 +1,44 @@
-# React + TypeScript + Vite
+# BeatSaberPlus - Song Overlay for OBS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This overlay can be used in combination with the Song Overlay Plugin as part of BeatSaberPlus by [HardCPP](https://github.com/hardcpp).<br>
+It is visually similar to the Amuse widget by [6K Labs](https://6klabs.com/amuse).
 
-Currently, two official plugins are available:
+**Currently only the 'Compact' player appearance is supported:**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<img src="./public/compact.gif">
 
-## React Compiler
+_Note: This version does not show player related data such as score, accuracy and misses. You may use this in combination with a different song overlay that includes this kind of info._
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Installation
 
-## Expanding the ESLint configuration
+1. Add a browser source to your scene in OBS
+2. Set the URL to
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```
+https://bspao.qlulezz.de/
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Match the resolution of the browser source to your scene (for example 1920x1080 or 1280x720)
+4. The overlay will now show up whenever you start a map and hide itself when you leave the map.
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## Customizations
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+The overlay can be visually adjusted. Changes are made through URL parameters.
+
+Example: `https://bspao.qlulezz.de/?position=bottom-left&scale=1.2`
+
+The following settings are currently supported:
+
+| Name     | Explanation                                                                                      | Default        | Example                  | Accepted values                                |
+| -------- | ------------------------------------------------------------------------------------------------ | -------------- | ------------------------ | ---------------------------------------------- |
+| position | The corner the overlay should go in.                                                             | top-left       | ?position=bottom-right   | top-left, top-right, bottom-left, bottom-right |
+| scale    | Scaling multiplier with the origin in the specified corner.                                      | 1.0            | ?scale=1.5               | Float between 0.0 and Infinity                 |
+| ip       | If you use a second PC to stream, write the IP address and port of the PC running the game here. | 127.0.0.1:2947 | ?ip=192.168.178.112:2947 | IP address + port                              |
+| debug    | Will show example data for testing if turned on.                                                 | false          | ?debug=true              | Boolean                                        |
+
+More settings will be added later.
+
+## Help
+
+Want to improve the overlay? [Let me know](https://qlulezz.de/).
