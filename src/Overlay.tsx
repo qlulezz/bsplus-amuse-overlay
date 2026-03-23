@@ -1,5 +1,3 @@
-import SongTitle from "./components/SongTitle";
-import Visualizer from "./components/Visualizer";
 import useBeatSaber from "./hooks/useBeatSaber";
 import { useVibrant } from "./hooks/useVibrant";
 import styles from "./Overlay.module.css";
@@ -9,6 +7,7 @@ import {
   parseAsFloat,
   parseAsBoolean,
 } from "nuqs";
+import CompactPlayer from "./players/Compact";
 
 const overlayPositions: Record<string, string> = {
   "top-left": styles.top_left,
@@ -43,53 +42,19 @@ export default function Overlay() {
   return (
     <div className={`${styles.overlay} ${positionStyle}`}>
       <div
-        className={`${styles.widget} ${visible ? styles.visible : styles.invisible}`}
+        className={`${styles.widget} ${visible ? styles.visible : ""} `}
         style={{ fontSize: `${scale * 100}%` }}
       >
-        <div className={styles.content}>
-          <div className={styles.cover_container}>
-            <img className={styles.cover_glow} src={cover} alt="" />
-            <img className={styles.cover} src={cover} alt="" />
-          </div>
-          <div className={styles.text} style={{ color: colors?.lightVibrant }}>
-            <div
-              className={styles.info}
-              style={{
-                background: colors?.darkMuted,
-              }}
-            >
-              <SongTitle title={info?.name} />
-              <p className={styles.artist}>{info?.artist}</p>
-            </div>
-            <div
-              className={styles.duration}
-              style={{ background: colors?.darkMuted }}
-            >
-              <p>{formattedCurrent}</p>
-              <div className={styles.vis_container}>
-                <div className={styles.vis}>
-                  <Visualizer
-                    isPlaying={isPlaying && visible}
-                    color={colors?.vibrant}
-                  />
-                </div>
-              </div>
-              <p>{formattedDuration}</p>
-            </div>
-          </div>
-        </div>
-        <div
-          className={styles.bar_container}
-          style={{ background: colors?.darkVibrant }}
-        >
-          <div
-            className={styles.bar}
-            style={{
-              background: colors?.vibrant,
-              width: progressPct + "%",
-            }}
-          ></div>
-        </div>
+        <CompactPlayer
+          cover={cover}
+          colors={colors}
+          info={info}
+          isPlaying={isPlaying}
+          visible={visible}
+          progressPct={progressPct}
+          formattedCurrent={formattedCurrent}
+          formattedDuration={formattedDuration}
+        />
       </div>
     </div>
   );

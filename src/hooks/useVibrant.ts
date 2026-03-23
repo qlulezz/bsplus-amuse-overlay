@@ -1,7 +1,7 @@
 import { Vibrant } from "node-vibrant/browser";
 import { useEffect, useState } from "react";
 
-interface Palette {
+export interface Palette {
   vibrant: string | undefined;
   muted: string | undefined;
   darkVibrant: string | undefined;
