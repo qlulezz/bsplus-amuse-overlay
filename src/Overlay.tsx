@@ -19,8 +19,10 @@ const overlayPositions: Record<string, string> = {
 export default function Overlay() {
   // Get parameters from url
   const [position] = useQueryState("position", parseAsString);
-  const [ip] = useQueryState("ip", parseAsString);
   const [scale] = useQueryState("scale", parseAsFloat.withDefault(1));
+  const [ip] = useQueryState("ip", parseAsString);
+  const [glow] = useQueryState("glow", parseAsBoolean.withDefault(true));
+  const [blur] = useQueryState("blur", parseAsBoolean.withDefault(true));
   const [debug] = useQueryState("debug", parseAsBoolean.withDefault(false));
 
   // Change styles of the overlay if position is given
@@ -47,6 +49,8 @@ export default function Overlay() {
       >
         <CompactPlayer
           cover={cover}
+          glow={glow}
+          blur={blur}
           colors={colors}
           info={info}
           isPlaying={isPlaying}

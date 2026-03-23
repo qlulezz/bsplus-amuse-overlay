@@ -6,6 +6,8 @@ import styles from "./Compact.module.css";
 
 interface PlayerProps {
   cover: string;
+  glow: boolean;
+  blur: boolean;
   colors: Palette | null;
   info: MapInfo | null;
   isPlaying: boolean;
@@ -20,7 +22,9 @@ export default function CompactPlayer(props: PlayerProps) {
     <div className={styles.widget}>
       <div className={styles.content}>
         <div className={styles.cover_container}>
-          <img className={styles.cover_glow} src={props.cover} alt="" />
+          {props.glow && (
+            <img className={styles.cover_glow} src={props.cover} alt="" />
+          )}
           <img className={styles.cover} src={props.cover} alt="" />
         </div>
         <div
@@ -35,10 +39,12 @@ export default function CompactPlayer(props: PlayerProps) {
           >
             <SongTitle title={props.info?.name} />
             <p className={styles.artist}>{props.info?.artist}</p>
-            <div
-              className={styles.cover_blur}
-              style={{ backgroundImage: `url(${props.cover})` }}
-            ></div>
+            {props.blur && (
+              <div
+                className={styles.cover_blur}
+                style={{ backgroundImage: `url(${props.cover})` }}
+              ></div>
+            )}
           </div>
           <div
             className={styles.duration}
