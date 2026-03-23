@@ -71,7 +71,7 @@ function VisualizerBar({ multiplicator, color }: VisualizerBarProps) {
         className={styles.top_cap}
         style={{
           ...sharedStyle,
-          transform: `translateY(calc(-${scale * 50}% + 3px))`,
+          transform: `translateY(calc(-${scale * 50}% + 0.1875em))`,
         }}
       />
 
@@ -89,7 +89,7 @@ function VisualizerBar({ multiplicator, color }: VisualizerBarProps) {
         className={styles.bottom_cap}
         style={{
           ...sharedStyle,
-          transform: `translateY(calc(${scale * 50}% - 3px))`,
+          transform: `translateY(calc(${scale * 50}% - 0.1875em))`,
         }}
       />
     </div>

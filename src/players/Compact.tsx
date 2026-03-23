@@ -35,6 +35,10 @@ export default function CompactPlayer(props: PlayerProps) {
           >
             <SongTitle title={props.info?.name} />
             <p className={styles.artist}>{props.info?.artist}</p>
+            <div
+              className={styles.cover_blur}
+              style={{ backgroundImage: `url(${props.cover})` }}
+            ></div>
           </div>
           <div
             className={styles.duration}
