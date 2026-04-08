@@ -45,6 +45,7 @@
   z-index: 50;
   border-radius: 0.5em;
   min-width: 100%;
+  filter: url(#gamma);
 }
 
 .cover_blur {
@@ -54,7 +55,7 @@
   height: 200%;
   width: 200%;
   background-position: center center;
-  filter: blur(15px) brightness(80%) saturate(120%);
+  filter: blur(15px) brightness(80%) saturate(120%) url(#gamma);
   opacity: 0.7;
 }
 

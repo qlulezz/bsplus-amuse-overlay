@@ -1,6 +1,7 @@
 import SongTitle from "../components/SongTitle";
 import Visualizer from "../components/Visualizer";
 import type { Palette } from "../hooks/useVibrant";
+import { GammaFilter } from "../utils/filter";
 import type { MapInfo } from "../utils/types";
 import styles from "./Compact.module.css";
 
@@ -20,6 +21,7 @@ interface PlayerProps {
 export default function CompactPlayer(props: PlayerProps) {
   return (
     <div className={styles.widget}>
+      <GammaFilter />
       <div className={styles.content}>
         <div className={styles.cover_container}>
           {props.glow && (
