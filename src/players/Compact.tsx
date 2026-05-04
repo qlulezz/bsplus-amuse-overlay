@@ -37,6 +37,7 @@ export default function CompactPlayer(props: PlayerProps) {
             className={styles.info}
             style={{
               background: props.colors?.darkMuted,
+              color: props.blur ? "white" : props.colors?.lightVibrant,
             }}
           >
             <SongTitle title={props.info?.name} />
