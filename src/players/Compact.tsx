@@ -19,9 +19,12 @@ interface PlayerProps {
 }
 
 export default function CompactPlayer(props: PlayerProps) {
+  // Only apply the gamma filter for custom cover images
+  const hasCustomCover = props.cover !== "/CustomLevelsPack.jpg";
+
   return (
     <div className={styles.widget}>
-      <GammaFilter />
+      {hasCustomCover && <GammaFilter />}
       <div className={styles.content}>
         <div className={styles.cover_container}>
           {props.glow && (
@@ -45,7 +48,10 @@ export default function CompactPlayer(props: PlayerProps) {
             {props.blur && (
               <div
                 className={styles.cover_blur}
-                style={{ backgroundImage: `url(${props.cover})` }}
+                style={{
+                  backgroundImage: `url(${props.cover})`,
+                  filter: `blur(15px) brightness(80%) saturate(120%) ${hasCustomCover ? "url(#gamma)" : ""}`,
+                }}
               ></div>
             )}
           </div>
